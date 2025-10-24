@@ -2,49 +2,52 @@
 
 alunos: Lucas Yuri, Emilly Eduarda
 
--Tabela:pano
-CREATE table plano (
-    id_plano SERIAOL primary key <
+Codigo SQL do Menu Acessivel 
+
+-- Tabela: plano
+CREATE TABLE plano (
+    id_plano SERIAL PRIMARY KEY,
     nome VARCHAR(100),
     descricao TEXT,
-    preco Decimal(10,2)
-);
---Tabela:estabelecimento
-create table estabelecimento(
- id UUID primary key ,
- nome VARCHAR (100)
- endereco text,
- cnpj VARCHAR(20)
-);
---tabela : usuario 
-create table usuario (
- id_usuario UUID primary key,
- email VARCHAR (100) unique,
- senha VARCHAR(50)
- id_estabelecimento UUID,
-FOREIGN key (id_estabelecimento) References estabelecimento(id)
+    preco DECIMAL(10,2)
 );
 
---tabela : documento
-create table documento (
- id_notificacao SERIAL PRIMARY key,
- tipo VARCHAR (50),
- caminho TEXT,
- status VARCHAR
- descricao TEXT,
- id_usurio UUID,
- id_estabelecimento UUId,
- primary key (id_usuario , id_estabelecimento),
- foreign key (id_usuario) references usuario (id_usuario),
- foreign key (id_estabelecimento) references estabelimento (id)
+-- Tabela: estabelecimento
+CREATE TABLE estabelecimento (
+    id UUID PRIMARY KEY,
+    nome VARCHAR(100),
+    endereco TEXT,
+    cnpj VARCHAR(20)
 );
 
--- tabela: assinatura 
-create table assinatura(
- id_plano INT,
- id_estabelicimento UUID,
- status VARCHAR(30),
- PRIMARY key (id_plano, id_estabelecimento),
- FOREIGN key (id_plano) references plano (id_plano),
- FOREING key  (id_estabelecimento) references estabelecimento (id)
- );
+-- Tabela: usuario
+CREATE TABLE usuario (
+    id_usuario UUID PRIMARY KEY,
+    email VARCHAR(100) UNIQUE,
+    senha VARCHAR(50),
+    id_estabelecimento UUID,
+    FOREIGN KEY (id_estabelecimento) REFERENCES estabelecimento(id)
+);
+
+-- Tabela: documento
+CREATE TABLE documento (
+    id_notificacao SERIAL PRIMARY KEY,
+    tipo VARCHAR(50),
+    caminho TEXT,
+    status VARCHAR(50),
+    descricao TEXT,
+    id_usuario UUID,
+    id_estabelecimento UUID,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario),
+    FOREIGN KEY (id_estabelecimento) REFERENCES estabelecimento(id)
+);
+
+-- Tabela: assinatura
+CREATE TABLE assinatura (
+    id_plano INT,
+    id_estabelecimento UUID,
+    status VARCHAR(30),
+    PRIMARY KEY (id_plano, id_estabelecimento),
+    FOREIGN KEY (id_plano) REFERENCES plano(id_plano),
+    FOREIGN KEY (id_estabelecimento) REFERENCES estabelecimento(id)
+);
